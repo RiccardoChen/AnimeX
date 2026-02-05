@@ -30,4 +30,5 @@ Key tools and technologies used in this project:
    npx ng serve --open
    ```
 
-#### **_NOTE_** : To run the complete project, you must start both the front-end and back-end servers simultaneously.
+> **NOTE:**
+> To run the complete project, you must start both the front-end and back-end servers simultaneously.
