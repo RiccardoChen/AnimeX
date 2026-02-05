@@ -5,6 +5,9 @@
   </h3>
 </p>
 
+##About the project
+A simple yet powerful anime tracker to organize your watchlist. View detailed anime info and manage your personal database with full support for adding, editing, and removing entries.
+
 ## 🚀 Functionalities
 
 ### 👤 For Users
@@ -35,7 +38,13 @@ The application implements a secure authentication flow using **JSON Web Tokens 
 * **Token Expiry:** For security, sessions are valid for **30 days**. 
 * **Auto-Re-authentication:** After the 30-day period, the token expires, and the user is securely prompted to log in again to refresh their credentials.
 
+> [!NOTE]
+> The database is already configured with two default accounts. You can use these to test the Admin and User functionalities without needing to register.
 
+| Role | Username | Password |
+| :--- | :--- | :--- |
+| **Admin** | `admin` | `admin123` |
+| **User** | `user` | `user123` |
 
 ## License
 
