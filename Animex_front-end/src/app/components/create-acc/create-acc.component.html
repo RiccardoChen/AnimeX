@@ -1,87 +1,136 @@
 <div class="min-h-screen bg-gray-900 p-6 text-white">
-  <button class="group mb-8 flex items-center text-gray-400 transition-colors hover:text-[#D5D1A1]" (click)="back()">
+  <button
+    class="group mb-8 flex items-center text-gray-400 transition-colors hover:text-[#D5D1A1]"
+    (click)="back()"
+  >
     <i class="pi pi-arrow-left mr-2 text-lg"></i>
     <span class="text-sm font-medium">Back to Accounts</span>
   </button>
 
   <div class="mx-auto max-w-2xl rounded-xl bg-gray-800 p-8 shadow-2xl">
     <h2 class="mb-8 text-center text-2xl font-bold">
-      <span class="bg-gradient-to-r from-[#D5D1A1] to-[#D6D5C6] bg-clip-text text-transparent">
+      <span
+        class="bg-gradient-to-r from-[#D5D1A1] to-[#D6D5C6] bg-clip-text text-transparent"
+      >
         Create New Account
       </span>
       <div class="mx-auto mt-2 h-1 w-24 bg-[#D5D1A1]/30"></div>
     </h2>
 
-    <form [formGroup]="accountForm" (ngSubmit)="createAccount()" class="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <form
+      [formGroup]="accountForm"
+      (ngSubmit)="createAccount()"
+      class="grid grid-cols-1 gap-6 md:grid-cols-2"
+    >
       <div class="space-y-2">
-        <label class="input-label">Username <span class="text-red-500">*</span></label>
+        <label class="input-label"
+          >Username <span class="text-red-500">*</span></label
+        >
         <div class="relative">
-          <input formControlName="username" class="input-field" placeholder="Enter unique username">
+          <input
+            formControlName="username"
+            class="input-field"
+            placeholder="Enter unique username"
+          />
           <i class="pi pi-user-edit absolute right-3 top-4 text-gray-500"></i>
         </div>
       </div>
 
       <div class="space-y-2">
-        <label class="input-label">Email <span class="text-red-500">*</span></label>
+        <label class="input-label"
+          >Email <span class="text-red-500">*</span></label
+        >
         <div class="relative">
-          <input type="email" formControlName="email" class="input-field" placeholder="user@example.com">
+          <input
+            type="email"
+            formControlName="email"
+            class="input-field"
+            placeholder="user@example.com"
+          />
           <i class="pi pi-envelope absolute right-3 top-4 text-gray-500"></i>
         </div>
       </div>
 
       <div class="space-y-2">
-        <label class="input-label">Password <span class="text-red-500">*</span></label>
+        <label class="input-label"
+          >Password <span class="text-red-500">*</span></label
+        >
         <div class="relative">
-          <input type="password" formControlName="password" class="input-field" placeholder="••••••••">
+          <input
+            type="password"
+            formControlName="password"
+            class="input-field"
+            placeholder="••••••••"
+          />
           <i class="pi pi-lock absolute right-3 top-4 text-gray-500"></i>
         </div>
-        <p class="text-xs text-gray-500">Minimum 8 characters with uppercase and number</p>
+        <p class="text-xs text-gray-500">
+          Minimum 8 characters with uppercase and number
+        </p>
       </div>
 
       <div class="space-y-2">
-        <label class="input-label">Account Role <span class="text-red-500">*</span></label>
+        <label class="input-label"
+          >Account Role <span class="text-red-500">*</span></label
+        >
         <div class="relative">
           <select formControlName="role" class="input-field">
-            <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+            <option *ngFor="let role of roles" [value]="role">
+              {{ role }}
+            </option>
           </select>
-          <i class="pi pi-shield absolute right-5 top-4 text-gray-500"></i>
+          <i class="pi pi-shield absolute right-5 top-1 text-gray-500"></i>
         </div>
       </div>
 
       <div class="col-span-full mt-4">
-        <div *ngIf="message"
-             class="flex items-center rounded-lg p-3 text-sm"
-             [ngClass]="{
-               'bg-green-900/30 text-green-400': isLoading === 'suc',
-               'bg-red-900/30 text-red-400': isLoading === 'err',
-               'bg-blue-900/30 text-blue-400': isLoading === 'none'
-             }">
-          <i class="pi mr-2 text-lg"
-             [class.pi-check-circle]="isLoading === 'suc'"
-             [class.pi-times-circle]="isLoading === 'err'"
-             [class.pi-info-circle]="isLoading === 'none'"></i>
-          {{message}}
+        <div
+          *ngIf="message"
+          class="flex items-center rounded-lg p-3 text-sm"
+          [ngClass]="{
+            'bg-green-900/30 text-green-400': isLoading === 'suc',
+            'bg-red-900/30 text-red-400': isLoading === 'err',
+            'bg-blue-900/30 text-blue-400': isLoading === 'none',
+          }"
+        >
+          <i
+            class="pi mr-2 text-lg"
+            [class.pi-check-circle]="isLoading === 'suc'"
+            [class.pi-times-circle]="isLoading === 'err'"
+            [class.pi-info-circle]="isLoading === 'none'"
+          ></i>
+          {{ message }}
         </div>
       </div>
 
       <div class="col-span-full mt-6 flex justify-center">
-        <button type="submit"
-                class="submit-button"
-                [disabled]="accountForm.invalid || isLoading === 'loading'"
-                [ngClass]="{
-                  'bg-green-600 hover:bg-green-700': isLoading === 'suc',
-                  'bg-red-600 hover:bg-red-700': isLoading === 'err',
-                  'bg-blue-600 hover:bg-blue-700': isLoading === 'none'
-                }">
-          <i class="pi"
-             [class.pi-spin.pi-spinner]="isLoading === 'loading'"
-             [class.pi-check]="isLoading === 'suc'"
-             [class.pi-times]="isLoading === 'err'"
-             [class.pi-save]="isLoading === 'none'"></i>
+        <button
+          type="submit"
+          class="submit-button"
+          [disabled]="accountForm.invalid || isLoading === 'loading'"
+          [ngClass]="{
+            'bg-green-600 hover:bg-green-700': isLoading === 'suc',
+            'bg-red-600 hover:bg-red-700': isLoading === 'err',
+            'bg-blue-600 hover:bg-blue-700': isLoading === 'none',
+          }"
+        >
+          <i
+            class="pi"
+            [class.pi-spin.pi-spinner]="isLoading === 'loading'"
+            [class.pi-check]="isLoading === 'suc'"
+            [class.pi-times]="isLoading === 'err'"
+            [class.pi-save]="isLoading === 'none'"
+          ></i>
           <span class="ml-2">
-            {{ isLoading === 'loading' ? 'Creating...' :
-            isLoading === 'suc' ? 'Account Created' :
-              isLoading === 'err' ? 'Error Occurred' : 'Create Account' }}
+            {{
+              isLoading === "loading"
+                ? "Creating..."
+                : isLoading === "suc"
+                  ? "Account Created"
+                  : isLoading === "err"
+                    ? "Error Occurred"
+                    : "Create Account"
+            }}
           </span>
         </button>
       </div>
