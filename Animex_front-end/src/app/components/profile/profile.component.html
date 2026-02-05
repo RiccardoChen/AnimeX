@@ -1,0 +1,172 @@
+<div class="text-[#D6D5C6] font-sans w-full min-h-screen  py-8 px-4">
+
+  <div class="container mx-auto max-w-3xl flex flex-col gap-y-6">
+
+    <div class="bg-[#2F2C2E] p-6 rounded-lg shadow-lg border border-[#3A3739]">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-[#D6D5C6]">Account Information</h2>
+        <div class="flex gap-2">
+          <button *ngIf="!isAccountEditing && !isPasswordEditing"
+                  (click)="toggleAccountEditing()"
+                  class="bg-[#D5D1A1] text-[#1A202C] font-semibold py-2 px-4 rounded-md hover:bg-[#D6D5C6] transition flex items-center gap-1">
+            <i class="pi pi-pencil"></i> Edit
+          </button>
+
+          <button *ngIf="isAccountEditing && !isPasswordEditing"
+                  (click)="updateAccount()"
+                  [disabled]="account.invalid"
+                  class="bg-green-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-700 transition flex items-center gap-1 disabled:opacity-50">
+            <i class="pi pi-check"></i> Save
+          </button>
+
+          <button *ngIf="isAccountEditing && !isPasswordEditing"
+                  (click)="cancelAccountEditing()"
+                  class="bg-red-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-700 transition flex items-center gap-1">
+            <i class="pi pi-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+
+      <form [formGroup]="account">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-1">Username</label>
+            <input type="text" formControlName="username"
+                   [readOnly]="!isAccountEditing || isPasswordEditing"
+                   class="w-full px-4 py-2 rounded-md bg-[#3A3739] text-white border border-[#4A4749] focus:ring-2 focus:ring-[#D5D1A1] focus:border-transparent
+                          read-only:bg-[#312E30] read-only:border-[#3A3739] read-only:text-gray-400">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-1">Email</label>
+            <input type="email" formControlName="email"
+                   [readOnly]="!isAccountEditing || isPasswordEditing"
+                   class="w-full px-4 py-2 rounded-md bg-[#3A3739] text-white border border-[#4A4749] focus:ring-2 focus:ring-[#D5D1A1] focus:border-transparent
+                          read-only:bg-[#312E30] read-only:border-[#3A3739] read-only:text-gray-400">
+          </div>
+
+          <div *ngIf="isAccountEditing && !isPasswordEditing" class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-400 mb-1">Password</label>
+            <div class="flex gap-2">
+              <input type="password" formControlName="password" readonly
+                     class="flex-grow px-4 py-2 rounded-md bg-[#312E30] text-gray-400 border border-[#3A3739] cursor-pointer">
+              <button type="button"
+                      class="bg-[#D5D1A1] text-[#1A202C] font-semibold py-2 px-4 rounded-md hover:bg-[#D6D5C6] transition"
+                      (click)="togglePasswordEditing()">
+                <i class="pi pi-lock"></i> Set Password
+              </button>
+            </div>
+          </div>
+
+          <form [formGroup]="pass" *ngIf="isPasswordEditing"  class="md:col-span-2 space-y-4 bg-[#312E30] p-4 rounded-md border border-[#D5D1A1]/30">
+            <div>
+              <label class="block text-sm font-medium text-[#D5D1A1] mb-1">Current Password</label>
+              <input type="password" formControlName="oldPassword"
+                     class="w-full px-4 py-2 rounded-md bg-[#3A3739] text-white border border-[#4A4749] focus:ring-2 focus:ring-[#D5D1A1]">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-[#D5D1A1] mb-1">New Password</label>
+              <input type="password" formControlName="newPassword"
+                     class="w-full px-4 py-2 rounded-md bg-[#3A3739] text-white border border-[#4A4749] focus:ring-2 focus:ring-[#D5D1A1]">
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+              <button type="button"
+                      class="bg-gray-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-700 transition"
+                      (click)="togglePasswordEditing()">
+                <i class="pi pi-arrow-left"></i> Back
+              </button>
+              <button type="button"
+                      class="bg-green-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-700 transition disabled:opacity-50"
+                      (click)="updatePassword()">
+                <i class="pi pi-check"></i> Save Password
+              </button>
+            </div>
+
+            <div *ngIf="messagePass" class="mt-4 text-center">
+              <p class="inline-block px-4 py-2 rounded-md text-sm"
+                 [ngClass]="{
+             'bg-red-900/30 text-red-400': messageStyle === 'error'
+           }">
+                {{messagePass}}
+              </p>
+            </div>
+          </form>
+        </div>
+      </form>
+
+      <div *ngIf="messageAcc" class="mt-4 text-center">
+        <p class="inline-block px-4 py-2 rounded-md text-sm"
+           [ngClass]="{
+             'bg-red-900/30 text-red-400': messageStyle === 'error'
+           }">
+          {{messageAcc}}
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-[#2F2C2E] p-6 rounded-lg shadow-lg border border-[#3A3739]">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-[#D6D5C6]">Profile Information</h2>
+        <div class="flex gap-2">
+          <button *ngIf="!isProfileEditing"
+                  (click)="toggleProfileEditing()"
+                  class="bg-[#D5D1A1] text-[#1A202C] font-semibold py-2 px-4 rounded-md hover:bg-[#D6D5C6] transition flex items-center gap-1">
+            <i class="pi pi-pencil"></i> Edit
+          </button>
+          <button *ngIf="isProfileEditing"
+                  (click)="updateProfile()"
+                  [disabled]="profile.invalid"
+                  class="bg-green-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-700 transition flex items-center gap-1 disabled:opacity-50">
+            <i class="pi pi-check"></i> Save
+          </button>
+          <button *ngIf="isProfileEditing"
+                  (click)="cancelProfileEditing()"
+                  class="bg-red-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-700 transition flex items-center gap-1">
+            <i class="pi pi-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+
+      <form [formGroup]="profile">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-1">Name</label>
+            <input type="text" formControlName="name"
+                   [readOnly]="!isProfileEditing"
+                   class="w-full px-4 py-2 rounded-md bg-[#3A3739] text-white border border-[#4A4749] focus:ring-2 focus:ring-[#D5D1A1]
+                          read-only:bg-[#312E30] read-only:border-[#3A3739] read-only:text-gray-400">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-1">Gender</label>
+            <select *ngIf="isProfileEditing" formControlName="sex"
+                    class="w-full px-4 py-2 rounded-md bg-[#3A3739] text-white border border-[#4A4749] focus:ring-2 focus:ring-[#D5D1A1] [&>option]:bg-[#2F2C2E]">
+              <option *ngFor="let sex of sexOptions" [value]="sex">{{sex}}</option>
+            </select>
+            <input *ngIf="!isProfileEditing" type="text" formControlName="sex" readonly
+                   class="w-full px-4 py-2 rounded-md bg-[#312E30] text-gray-400 border border-[#3A3739]">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-1">Birthday</label>
+            <input type="date" formControlName="birthday"
+                   [readOnly]="!isProfileEditing"
+                   class="w-full px-4 py-2 rounded-md bg-[#3A3739] text-white border border-[#4A4749] focus:ring-2 focus:ring-[#D5D1A1]
+                          read-only:bg-[#312E30] read-only:border-[#3A3739] read-only:text-gray-400">
+          </div>
+        </div>
+      </form>
+
+      <div *ngIf="messsagePro" class="mt-4 text-center">
+        <p class="inline-block px-4 py-2 rounded-md text-sm"
+           [ngClass]="{
+             'bg-red-900/30 text-red-400': messageStyle === 'error'
+           }">
+          {{messsagePro}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

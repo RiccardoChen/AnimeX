@@ -1,0 +1,46 @@
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#1A202C] to-[#2D3748]" *ngIf="router.url === '/animeManage'">
+  <div class="container mx-auto max-w-4xl">
+    <div class="text-center mb-16">
+      <h1 class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#D5D1A1] to-[#D6D5C6] mb-4">
+        Anime Management
+      </h1>
+      <div class="mx-auto h-1 w-24 bg-[#D5D1A1]/30 rounded-full"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      <a routerLink="/animeManage/createAnime" class="group relative">
+        <div class="action-card bg-green-600/20 hover:bg-green-600/30 border-2 border-green-600/30 hover:border-green-600/50">
+          <div class="flex justify-center mb-6">
+            <i class="pi pi-plus-circle text-5xl text-green-400 transition-transform duration-300 group-hover:scale-110"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Create New</h3>
+          <p class="text-sm text-gray-400">Add new anime</p>
+        </div>
+      </a>
+
+      <a routerLink="/animeManage/updateAnime" class="group relative">
+        <div class="action-card bg-yellow-600/20 hover:bg-yellow-600/30 border-2 border-yellow-600/30 hover:border-yellow-600/50">
+          <div class="flex justify-center mb-6">
+            <i class="pi pi-pencil text-5xl text-yellow-400 transition-transform duration-300 group-hover:scale-110"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Edit Content</h3>
+          <p class="text-sm text-gray-400">Modify anime</p>
+        </div>
+      </a>
+
+      <a routerLink="/animeManage/deleteAnime" class="group relative">
+        <div class="action-card bg-red-600/20 hover:bg-red-600/30 border-2 border-red-600/30 hover:border-red-600/50">
+          <div class="flex justify-center mb-6">
+            <i class="pi pi-trash text-5xl text-red-400 transition-transform duration-300 group-hover:scale-110"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Remove Anime</h3>
+          <p class="text-sm text-gray-400">Delete anime</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div>
+  <router-outlet></router-outlet>
+</div>

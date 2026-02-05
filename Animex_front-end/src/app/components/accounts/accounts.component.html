@@ -1,0 +1,112 @@
+<div class="container mx-auto p-6 max-w-7xl min-h-screen flex flex-col" *ngIf="this.router.url === '/accounts'">
+  <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
+    <h1 class="text-3xl font-bold text-[#D5D1A1] flex items-center gap-2">
+      <i class="pi pi-users"></i>
+      Account Management
+    </h1>
+
+    <div class="flex items-center gap-4 flex-grow max-w-xl">
+      <div class="relative flex-grow">
+        <input
+          class="w-full h-12 rounded-lg bg-gray-800 text-[#D6D5C6] pl-4 pr-12
+                 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#D5D1A1]"
+          type="text"
+          placeholder="Search accounts..."
+          [(ngModel)]="searchName"
+          (input)="suggestsAccName()">
+        <i class="pi pi-search absolute right-4 top-4 text-gray-500"></i>
+
+        <ul *ngIf="accNameList.length > 0"
+            class="absolute top-full left-0 right-0 mt-2 bg-gray-800 rounded-lg shadow-xl z-20
+                   border border-gray-700 max-h-60 overflow-y-auto">
+          <li *ngFor="let name of accNameList"
+              (click)="onSelectAcc(name)"
+              class="px-4 py-3 text-sm text-gray-300 hover:bg-[#D5D1A1]/10 cursor-pointer
+                     transition-colors flex items-center gap-2">
+            <i class="pi pi-user"></i>
+            {{name}}
+          </li>
+        </ul>
+      </div>
+
+      <a routerLink="/accounts/createAcc"
+         class="h-12 bg-[#D5D1A1] text-[#1A202C] hover:bg-[#D6D5C6] px-4 rounded-lg
+                font-semibold flex items-center gap-2 transition-colors whitespace-nowrap">
+        <i class="pi pi-plus"></i>
+        <span class="max-sm:hidden">New Account</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-24">
+    <div *ngFor="let account of accounts"
+         class="group bg-gray-800 rounded-xl p-4 shadow-md hover:shadow-lg transition-all
+                border border-gray-700 hover:border-[#D5D1A1]/30">
+      <div class="space-y-2 mb-4">
+        <div class="flex items-center gap-2">
+          <i class="pi pi-user text-[#D5D1A1]"></i>
+          <h2 class="text-lg font-semibold text-white truncate">{{account.username}}</h2>
+        </div>
+        <div class="flex items-center gap-2 text-gray-300">
+          <i class="pi pi-envelope"></i>
+          <p class="truncate">{{account.email}}</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-1 rounded-full text-xs font-semibold uppercase tracking-wide"
+                [ngClass]="getRoleClasses(account.role)">
+            {{ account.role }}
+          </span>
+
+        </div>
+      </div>
+
+      <div class="border-t border-gray-700 pt-4" *ngIf="account.role === 'Admin'" ></div>
+
+      <div class="flex items-center gap-2 border-t border-gray-700 pt-4" *ngIf="account.role !== 'Admin'" >
+        <a [routerLink]="['/accounts/updateAcc', account.id]"
+           class="flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-lg
+                  bg-yellow-600/30 text-yellow-400 hover:bg-yellow-600/40 transition-colors">
+          <i class="pi pi-pencil"></i>
+          <span class="max-xs:hidden">Edit</span>
+        </a>
+        <button (click)="deleteConferm(account.id)"
+                class="flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-lg
+                       bg-red-600/30 text-red-400 hover:bg-red-600/40 transition-colors">
+          <i class="pi pi-trash"></i>
+          <span class="max-xs:hidden">Delete</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="fixed bottom-0 left-0 right-0 py-4 z-50 backdrop-blur-sm">
+    <div class="container mx-auto max-w-7xl px-6">
+      <div class="flex items-center justify-between bg-gray-800/80 rounded-lg p-2 shadow-xl border border-gray-700">
+        <div class="text-gray-400 text-sm">
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button (click)="goPrev()"
+                  [disabled]="page === 0"
+                  class="p-2 rounded-full hover:bg-gray-700/50 transition-colors
+                         disabled:opacity-50 disabled:cursor-not-allowed">
+            <i class="pi pi-chevron-left text-gray-300"></i>
+          </button>
+
+          <span class="text-gray-300 mx-2">
+            {{page + 1}} / {{totalPages}}
+          </span>
+
+          <button (click)="goNext()"
+                  [disabled]="page === totalPages - 1"
+                  class="p-2 rounded-full hover:bg-gray-700/50 transition-colors
+                         disabled:opacity-50 disabled:cursor-not-allowed">
+            <i class="pi pi-chevron-right text-gray-300"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

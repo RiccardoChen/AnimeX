@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;700&family=Big+Shoulders+Inline:opsz,wght@10..72,100..900&family=Jersey+10&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Sigmar&family=Tauri&display=swap');
+@import "primeicons/primeicons.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #1A202C;
+  font-family: 'Montserrat', sans-serif;
+}

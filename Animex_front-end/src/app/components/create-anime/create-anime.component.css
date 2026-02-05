@@ -1,0 +1,77 @@
+input[type="number"]::-webkit-inner-spin-button {
+  appearance: none;
+}
+
+.transparent-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.transparent-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.transparent-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(213, 209, 161, 0.5);
+  border-radius: 8px;
+}
+
+.transparent-scrollbar {
+  scrollbar-color: rgba(213, 209, 161, 0.5) transparent;
+  scrollbar-width: thin;
+}
+
+.input-label {
+  @apply block text-sm font-medium text-[#D5D1A1] mb-2;
+}
+
+.input-field {
+  @apply w-full rounded-xl bg-gray-700 px-4 py-3 text-white placeholder-gray-500
+  border border-gray-600 focus:ring-2 focus:ring-[#D5D1A1] focus:border-transparent
+  hover:border-gray-500 transition-colors pr-10;
+}
+
+.file-upload-button {
+  @apply w-full flex items-center justify-center px-4 py-2.5 rounded-xl bg-gray-700
+  border border-dashed border-gray-600 hover:border-[#D5D1A1]/50 text-gray-400
+  hover:text-white cursor-pointer transition-all;
+}
+
+.multi-select {
+  @apply w-full rounded-xl bg-gray-700 px-4 py-2.5 cursor-pointer flex items-center
+  justify-between border border-gray-600 hover:border-gray-500;
+}
+
+.selected-items {
+  @apply flex flex-wrap gap-2;
+}
+
+.selected-tag {
+  @apply bg-[#D5D1A1]/20 text-[#D5D1A1] px-3 py-1 rounded-full flex items-center gap-2
+  text-sm hover:bg-[#D5D1A1]/30 transition-colors;
+}
+
+
+.dropdown-menu {
+  @apply absolute w-full mt-2 bg-gray-800 rounded-xl shadow-xl border border-gray-700
+  max-h-48 overflow-y-auto z-20;
+}
+
+.dropdown-item {
+  @apply px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer
+  transition-colors;
+}
+
+.status-message {
+  @apply flex items-center px-4 py-2 rounded-xl text-sm;
+  &.text-green-400 { @apply bg-green-900/20; }
+  &.text-red-400 { @apply bg-red-900/20; }
+  &.text-blue-400 { @apply bg-blue-900/20; }
+}
+
+.submit-button {
+  @apply px-8 py-3 rounded-xl font-medium flex items-center gap-2 transition-all
+  disabled:opacity-70 disabled:cursor-not-allowed;
+  &.primary { @apply bg-[#D5D1A1] text-gray-900 hover:bg-[#D6D5C6]; }
+  &.success { @apply bg-green-600 text-white hover:bg-green-700; }
+  &.error { @apply bg-red-600 text-white hover:bg-red-700; }
+}

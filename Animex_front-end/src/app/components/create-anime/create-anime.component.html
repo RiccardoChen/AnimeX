@@ -1,0 +1,137 @@
+<div class="min-h-screen bg-gray-900 p-6 text-white">
+  <button class="group mb-8 flex items-center text-gray-400 hover:text-[#D5D1A1] transition-colors" (click)="back()">
+    <i class="pi pi-arrow-left mr-2 text-lg"></i>
+    <span class="text-sm font-medium">Back to Management</span>
+  </button>
+
+  <div class="mx-auto max-w-5xl rounded-2xl bg-gray-800 p-8 shadow-2xl border border-gray-700/50">
+    <h2 class="text-3xl font-bold text-center mb-10 bg-gradient-to-r from-[#D5D1A1] to-[#D6D5C6] bg-clip-text text-transparent">
+      Create New Anime
+    </h2>
+
+    <form [formGroup]="createAnimeForm" (ngSubmit)="createAnime()" class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8">
+      <div class="space-y-6">
+        <div class="relative group">
+          <div class="aspect-[2/3] rounded-xl border-2 border-dashed border-gray-600 bg-gray-700/50 flex items-center justify-center overflow-hidden transition-all hover:border-[#D5D1A1]/50">
+            <img *ngIf="hasImage" [src]="imagePreviewUrl" class="w-full h-full object-cover transition-opacity group-hover:opacity-80">
+            <div *ngIf="!hasImage" class="text-center p-4">
+              <i class="pi pi-image text-4xl text-gray-500 mb-2"></i>
+              <p class="text-sm text-gray-400">No image selected</p>
+            </div>
+          </div>
+
+          <div class="mt-4 space-y-4">
+            <div>
+              <label class="input-label">Image URL</label>
+              <div class="relative">
+                <input type="text" formControlName="img" (input)="onUrlInput($event)"
+                       class="input-field pr-10" placeholder="https://example.com/image.jpg">
+                <i class="pi pi-link absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+              </div>
+            </div>
+
+            <div>
+              <label class="input-label">Upload Image</label>
+              <label class="file-upload-button">
+                <input type="file" accept="image/*" (change)="onFileSelected($event)" class="hidden">
+                <i class="pi pi-upload mr-2"></i>
+                Choose File
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div class="grid gap-6 md:grid-cols-2">
+          <div>
+            <label class="input-label">Anime Title</label>
+            <div class="relative">
+              <input type="text" formControlName="name"
+                     class="input-field pr-10" placeholder="Enter anime title">
+              <i class="pi pi-tag absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+            </div>
+          </div>
+
+          <div class="relative">
+            <label class="input-label">Categories</label>
+            <div class="multi-select" (click)="toggleDropdown()">
+              <div class="selected-items">
+                <span *ngIf="selectedCategories.length === 0" class="placeholder">Select categories...</span>
+                <div *ngFor="let cat of selectedCategories" class="selected-tag">
+                  {{ cat }}
+                  <button type="button" (click)="removeCategory(cat)" class="remove-tag">
+                    <i class="pi pi-times-circle"></i>
+                  </button>
+                </div>
+              </div>
+              <i class="pi pi-chevron-down text-gray-400 absolute right-3 top-2/3 -translate-y-1/2"></i>
+            </div>
+
+            <div *ngIf="categoryDropdownOpen" class="dropdown-menu transparent-scrollbar">
+              <div *ngFor="let cat of categories"
+                   class="dropdown-item"
+                   (click)="selectCategory(cat)">
+                {{ cat }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <div>
+            <label class="input-label">Episodes</label>
+            <div class="relative">
+              <input type="number" formControlName="episode"
+                     class="input-field pr-10" placeholder="Number of episodes">
+              <i class="pi pi-list absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+            </div>
+          </div>
+
+          <div>
+            <label class="input-label">Release Year</label>
+            <div class="relative">
+              <input type="number" formControlName="year" min="1970" max="2030"
+                     class="input-field pr-10" placeholder="Release year">
+              <i class="pi pi-calendar absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="input-label">Description</label>
+          <textarea formControlName="description" rows="5"
+                    class="input-field transparent-scrollbar" placeholder="Enter detailed description..."></textarea>
+        </div>
+
+        <div>
+          <label class="input-label">Trailer URL</label>
+          <div class="relative">
+            <input type="text" formControlName="video"
+                   class="input-field pr-10" placeholder="https://youtube.com/embed/...">
+            <i class="pi pi-video absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-2">
+        <div class="flex flex-col-reverse md:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-gray-700/50">
+          <div class="status-message" [ngClass]="messageStyle">
+            {{ message }}
+          </div>
+
+          <button type="submit" class="submit-button"
+                  [ngClass]="{
+                    'error': isLoading === 'err',
+                    'primary': isLoading === 'none',
+
+                  }">
+            <i class="pi" [class]="buttonIcon"></i>
+            {{ buttonText }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+

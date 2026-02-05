@@ -1,0 +1,58 @@
+<div class="text-[#D6D5C6] font-sans min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-md px-4">
+    <form [formGroup]="login" (ngSubmit)="verifyData()"
+          class="bg-[#2F2C2E] p-8 rounded-xl shadow-lg border border-[#3A3739] flex flex-col gap-y-6">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold text-[#D6D5C6] mb-1">Login</h2>
+        <p class="text-sm text-gray-400">Welcome back! Please enter your details</p>
+      </div>
+
+      <div class="space-y-5">
+        <div class="form-group">
+          <label for="username" class="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
+          <div class="relative">
+            <input id="username" type="text" formControlName="email"
+                   class="w-full pl-10 pr-4 py-3 rounded-lg bg-[#3A3739] text-white border border-[#4A4749] focus:ring-2 focus:ring-[#D5D1A1] focus:border-transparent placeholder-gray-500"
+                   placeholder="your@email.com">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="pi pi-envelope text-gray-500"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="block text-sm font-medium text-gray-400 mb-2">Password</label>
+          <div class="relative">
+            <input id="password" type="password" formControlName="password"
+                   class="w-full pl-10 pr-4 py-3 rounded-lg bg-[#3A3739] text-white border border-[#4A4749] focus:ring-2 focus:ring-[#D5D1A1] focus:border-transparent placeholder-gray-500"
+                   placeholder="your password">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="pi pi-lock text-gray-500"></i>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="message" class="mt-2">
+          <p class="text-sm px-4 py-2 rounded-lg text-center"
+             [ngClass]="{
+               'bg-red-900/30 text-red-400': messageStyle === 'error',
+             }">
+            {{ message }}
+          </p>
+        </div>
+      </div>
+
+      <button type="submit"
+              class="w-full bg-[#D5D1A1] text-[#1A202C] font-bold py-3 px-4 rounded-lg hover:bg-[#D6D5C6] transition-all duration-200 flex items-center justify-center gap-2
+                     focus:outline-none focus:ring-2 focus:ring-[#D5D1A1] focus:ring-offset-2 focus:ring-offset-[#2F2C2E]">
+        <i class="pi pi-sign-in"></i>
+        LOGIN
+      </button>
+
+      <p class="text-sm text-center text-gray-400 mt-2">
+        Don't have an account?
+        <a routerLink="/signin" class="text-[#D5D1A1] hover:underline font-medium">Create Account</a>
+      </p>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,138 @@
+<div class="py-4 px-6">
+  <div class="container mx-auto flex justify-between items-center">
+    <h2 class="text-4xl font-extrabold text-[#D5D1A1]">
+      <a routerLink="/home" class="flex">
+        <img src="assets/anime-img.svg" alt="Logo" class="h-10 w-auto" />
+        AnimeX</a></h2>
+    <div class="hidden md:flex items-center gap-x-8 text-lg">
+      <nav class="flex gap-6">
+        <a routerLink="/home"
+           class="text-[#D6D5C6] hover:text-[#D5D1A1] hover:font-bold transition duration-200 ease-in-out"
+           routerLinkActive="font-bold text-yellow-100"
+           [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        <a routerLink="/about"
+           class="text-[#D6D5C6] hover:text-[#D5D1A1] hover:font-bold transition duration-200 ease-in-out"
+           routerLinkActive="font-bold text-yellow-100"
+           [routerLinkActiveOptions]="{ exact: true }" *ngIf="!isAdmin">About us</a>
+        <a routerLink="/animeHome"
+           class="text-[#D6D5C6] hover:text-[#D5D1A1] hover:font-bold transition duration-200 ease-in-out"
+           routerLinkActive="font-bold text-yellow-100" [routerLinkActiveOptions]="{ exact: true }">Anime</a>
+
+        <a routerLink="/animeManage"
+           class="text-[#D6D5C6] hover:text-[#D5D1A1] hover:font-bold transition duration-200 ease-in-out"
+           routerLinkActive="font-bold text-yellow-100" [routerLinkActiveOptions]="{ exact: true }" *ngIf="isLoggedIn && isAdmin">AnimeM</a>
+
+        <a routerLink="/accounts"
+           class="text-[#D6D5C6] hover:text-[#D5D1A1] hover:font-bold transition duration-200 ease-in-out"
+           routerLinkActive="font-bold text-yellow-100" [routerLinkActiveOptions]="{ exact: true }" *ngIf="isLoggedIn && isAdmin">Accounts</a>
+
+        <a routerLink="/myList"
+           class="text-[#D6D5C6] hover:text-[#D5D1A1] hover:font-bold transition duration-200 ease-in-out"
+           routerLinkActive="font-bold text-yellow-100" [routerLinkActiveOptions]="{ exact: true }" *ngIf="isLoggedIn && !isAdmin">My List</a>
+        <a routerLink="/profile"
+           class="text-[#D6D5C6] hover:text-[#D5D1A1] hover:font-bold transition duration-200 ease-in-out"
+           routerLinkActive="font-bold text-yellow-100" [routerLinkActiveOptions]="{ exact: true }" *ngIf="isLoggedIn">Profile</a>
+      </nav>
+      <button *ngIf="!isLoggedIn" class="border border-[#D6D5C6] text-[#D6D5C6] px-4 py-2 rounded-xl
+                       hover:bg-[#D6D5C6] hover:text-[#1A202C] hover:font-bold transition duration-200 ease-in-out"
+              routerLink="/login" routerLinkActive="bg-[#D6D5C6] text-black font-bold"
+              [routerLinkActiveOptions]="{ exact: true }">
+        Login
+      </button>
+      <button *ngIf="isLoggedIn" class="border border-[#D6D5C6] text-[#D6D5C6] px-4 py-2 rounded-xl
+                       hover:bg-red-600 hover:text-[#1A202C] hover:font-bold transition duration-200 ease-in-out"
+              (click)="logout()">
+        Logout
+      </button>
+    </div>
+
+    <button
+      class="md:hidden text-3xl text-[#D6D5C6] hover:text-[#D5D1A1] transition duration-200 ease-in-out"
+      *ngIf="!isBurgerOn"
+      (click)="activeBuger()">
+      <i class="pi pi-bars"></i>
+    </button>
+
+    <div
+      class="md:hidden fixed top-0 left-0 w-full h-full bg-[#2F2C2E] p-4 z-50 transform transition-all duration-300 ease-in-out"
+      [ngClass]="{
+    'translate-x-0 opacity-100': isBurgerOn,
+    '-translate-x-full opacity-0 pointer-events-none': !isBurgerOn
+  }">
+
+      <button
+        class="absolute top-4 right-4 text-3xl text-[#D6D5C6] hover:text-red-600 transition duration-200 ease-in-out z-50"
+        (click)="activeBuger()">
+        <i class="pi pi-times"></i>
+      </button>
+
+      <ul class="flex flex-col gap-4 mt-16">
+        <li>
+          <a routerLink="/home"
+             routerLinkActive="bg-[#D5D1A1] text-white font-bold"
+             [routerLinkActiveOptions]="{ exact: true }"
+             class="block text-[#D6D5C6] hover:bg-[#D5D1A1] p-4 rounded hover:text-white"
+             (click)="activeBuger()">Home</a>
+        </li>
+        <li>
+          <a routerLink="/about"
+             routerLinkActive="bg-[#D5D1A1] text-white font-bold"
+             [routerLinkActiveOptions]="{ exact: true }" *ngIf="!isAdmin"
+             class="block text-[#D6D5C6] hover:bg-[#D5D1A1] p-4 rounded hover:text-white"
+             (click)="activeBuger()">About us</a>
+        </li>
+        <li>
+          <a routerLink="/animeHome"
+             routerLinkActive="bg-[#D5D1A1] text-white font-bold"
+             [routerLinkActiveOptions]="{ exact: true }"
+             class="block text-[#D6D5C6] hover:bg-[#D5D1A1] p-4 rounded hover:text-white"
+             (click)="activeBuger()">Anime</a>
+        </li>
+        <li>
+          <a routerLink="/animeManage"
+             routerLinkActive="bg-[#D5D1A1] text-white font-bold"
+             [routerLinkActiveOptions]="{ exact: true }" *ngIf="isLoggedIn && isAdmin"
+             class="block text-[#D6D5C6] hover:bg-[#D5D1A1] p-4 rounded hover:text-white"
+             (click)="activeBuger()">AnimeM</a>
+        </li>
+        <li>
+          <a routerLink="/accounts"
+             routerLinkActive="bg-[#D5D1A1] text-white font-bold"
+             [routerLinkActiveOptions]="{ exact: true }" *ngIf="isLoggedIn && isAdmin"
+             class="block text-[#D6D5C6] hover:bg-[#D5D1A1] p-4 rounded hover:text-white"
+             (click)="activeBuger()">Accounts</a>
+        </li>
+
+        <li *ngIf="isLoggedIn">
+          <a routerLink="/myList"
+             routerLinkActive="bg-[#D5D1A1] text-white font-bold"
+             [routerLinkActiveOptions]="{ exact: true }" *ngIf="isLoggedIn && !isAdmin"
+             class="block text-[#D6D5C6] hover:bg-[#D5D1A1] p-4 rounded hover:text-white"
+             (click)="activeBuger()">My List</a>
+        </li>
+        <li *ngIf="isLoggedIn">
+          <a routerLink="/profile"
+             routerLinkActive="bg-[#D5D1A1] text-white font-bold"
+             [routerLinkActiveOptions]="{ exact: true }"
+             class="block text-[#D6D5C6] hover:bg-[#D5D1A1] p-4 rounded hover:text-white"
+             (click)="activeBuger()">Profile</a>
+        </li>
+        <li *ngIf="!isLoggedIn">
+          <a routerLink="/login"
+             routerLinkActive="bg-[#D5D1A1] text-white font-bold"
+             [routerLinkActiveOptions]="{ exact: true }"
+             class="block text-[#D6D5C6] hover:bg-[#D5D1A1] p-4 rounded hover:text-white"
+             (click)="activeBuger()">Login</a>
+        </li>
+        <li *ngIf="isLoggedIn">
+          <a routerLink="/login"
+             class="block text-[#D6D5C6] hover:bg-[#D5D1A1] p-4 rounded hover:text-white"
+             (click)="logoutBurg()">Logout</a>
+        </li>
+      </ul>
+    </div>
+
+
+
+  </div>
+</div>

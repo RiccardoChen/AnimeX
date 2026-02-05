@@ -1,0 +1,16 @@
+.transparent-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.transparent-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.transparent-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(213, 209, 161, 0.5);
+  border-radius: 8px;
+}
+.transparent-scrollbar {
+  scrollbar-color: grey transparent;
+  scrollbar-width: thin;
+}

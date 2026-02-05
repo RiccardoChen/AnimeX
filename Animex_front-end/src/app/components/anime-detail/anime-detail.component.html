@@ -1,0 +1,74 @@
+<div class="mx-auto max-w-7xl my-8 px-4 sm:px-6 lg:px-8" *ngIf="anime">
+  <div class="bg-[#1A202C] rounded-xl shadow-2xl overflow-hidden border border-[#2D3748]">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 p-6 md:p-8">
+      <div class="lg:col-span-1 flex justify-center lg:justify-start">
+        <img src="{{anime.img}}"
+             alt="{{anime.name}} poster"
+             class="rounded-lg shadow-xl w-full max-w-xs lg:max-w-none h-auto object-cover border-2 border-[#D5D1A1]/20">
+      </div>
+
+      <div class="lg:col-span-3 space-y-6">
+        <div class="space-y-3">
+          <h1 class="text-4xl font-bold text-[#D5D1A1]">{{ anime.name }}</h1>
+
+          <div class="flex flex-wrap items-center gap-3 text-sm">
+            <span class="bg-[#D5D1A1]/10 text-[#D5D1A1] px-3 py-1 rounded-full border border-[#D5D1A1]/30 font-medium">
+              {{ anime.category }}
+            </span>
+            <div class="flex items-center text-[#D6D5C6]">
+              <i class="pi pi-calendar mr-1 text-[#D5D1A1]"></i>
+              <span>{{ anime.year }}</span>
+            </div>
+            <div class="flex items-center text-[#D6D5C6]">
+              <i class="pi pi-play-circle mr-1 text-[#D5D1A1]"></i>
+              <span>Episodes: {{ anime.episode }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <h2 class="text-2xl font-semibold text-[#D5D1A1] border-b border-[#2D3748] pb-2">Synopsis</h2>
+          <div class="max-h-72 overflow-y-auto pr-3 text-[#D6D5C6] leading-relaxed text-justify transparent-scrollbar">
+            <p class="whitespace-pre-line">{{ anime.description }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="!isAdmin" class="pt-4">
+          <button
+            class="font-semibold py-3 px-8 rounded-lg shadow-lg transition-all duration-200 flex items-center gap-3
+                   focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#1A202C]
+                   text-[#1A202C] hover:scale-[1.02] transform transition
+                   disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100
+                   bg-gradient-to-r from-[#D5D1A1] to-[#b9b58c] hover:from-[#D6D5C6] hover:to-[#c4c3b0] focus:ring-[#D5D1A1]"
+            (click)="saveAnime()"
+            [disabled]="isSaved"
+          >
+            <i class="pi text-lg" [ngClass]="{'pi-heart': !isSaved, 'pi-heart-fill text-red-500': isSaved}"></i>
+            <span>{{ isSaved ? 'Added to Collection' : 'Add to My List' }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-6 pb-8 pt-6 border-t border-[#2D3748]">
+      <h2 class="text-2xl font-semibold text-[#D5D1A1] mb-4 flex items-center gap-2">
+        <i class="pi pi-youtube"></i>
+        <span>Official Trailer</span>
+      </h2>
+
+      <div class="relative w-full h-0 pb-[56.25%] rounded-xl overflow-hidden bg-black/50">
+        <iframe
+          class="absolute top-0 left-0 w-full h-full"
+          [src]="safeVideoUrl"
+          [title]="anime.name + ' trailer'"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

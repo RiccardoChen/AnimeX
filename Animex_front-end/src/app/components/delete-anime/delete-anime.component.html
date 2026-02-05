@@ -1,0 +1,57 @@
+<div class="px-6 pt-4 max-w-screen-2xl mx-auto">
+  <button
+    class="mb-6 group flex items-center text-gray-400 hover:text-[#D5D1A1] transition-colors"
+    (click)="back()">
+    <i class="pi pi-arrow-left mr-2 text-lg group-hover:-translate-x-1 transition-transform"></i>
+    <span class="text-sm font-medium">Back to Management</span>
+  </button>
+
+  <div class="flex justify-center items-start mb-8 gap-x-3">
+    <div class="relative flex-grow max-w-2xl">
+      <input
+        class="w-full h-11 rounded-lg bg-gray-800 text-white placeholder-gray-400 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-[#D5D1A1] focus:border-transparent transition-all duration-200 shadow-sm"
+        type="text"
+        placeholder="Search anime..."
+        [(ngModel)]="searchName"
+        (input)="showSearchSuggestions()">
+      <ul
+        class="absolute top-full left-0 right-0 bg-gray-800 border border-gray-700 rounded-lg mt-1 z-10 overflow-y-auto max-h-60 shadow-xl"
+        *ngIf="animeNameList">
+        <li
+          class="px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-700 cursor-pointer transition-colors duration-150 border-b border-gray-700 last:border-b-0"
+          *ngFor="let name of animeNameList"
+          (click)="onSelectAnime(name)">
+          {{name}}
+        </li>
+      </ul>
+    </div>
+
+    <button
+      class="h-11 w-14 rounded-lg text-[#D6D5C6] bg-[#312E30] hover:bg-[#3A3739] hover:text-[#D5D1A1] transition-all duration-200 ease-in-out flex items-center justify-center shadow-md border border-gray-700 hover:border-[#D5D1A1]"
+      type="button"
+      (click)="onClickAnime()">
+      <i class="pi pi-search text-lg"></i>
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+    <div *ngFor="let anime of animeList"
+         class="border border-gray-700 rounded-xl p-5 text-center bg-gray-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-stretch h-full transform hover:-translate-y-1">
+
+      <div class="flex-grow flex flex-col">
+        <img
+          [src]="anime.img"
+          [alt]="anime.name + ' image'"
+          class="w-full h-72 object-cover mb-4 rounded-lg shadow-inner">
+
+        <h3 class="text-lg font-semibold mb-3 line-clamp-2 leading-tight">{{anime.name}}</h3>
+      </div>
+
+      <button
+        class="mt-4 bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-lg transition-all duration-200 ease-in-out font-medium shadow-md hover:shadow-lg"
+        (click)="deleteConferm(anime.id)">
+        Delete
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,161 @@
+<div class="min-h-screen bg-gray-900 p-6 text-white">
+  <button class="group mb-8 flex items-center text-gray-400 hover:text-[#D5D1A1] transition-colors" (click)="back()">
+    <i class="pi pi-arrow-left mr-2 text-lg"></i>
+    <span class="text-sm font-medium">Back to Management</span>
+  </button>
+
+  <div class="max-w-3xl mx-auto mb-12">
+    <div class="relative flex gap-2">
+      <div class="flex-1 relative">
+        <input
+          class="w-full h-12 rounded-xl bg-gray-800 px-4 pr-12 text-white placeholder-gray-500
+                border border-gray-700 focus:ring-2 focus:ring-[#D5D1A1] transition-all"
+          type="text"
+          placeholder="Search anime..."
+          [(ngModel)]="animeName"
+          (input)="suggestionAnimeName()"
+        >
+        <i class="pi pi-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+
+        <ul *ngIf="animeNameList.length > 0"
+            class="absolute top-full left-0 right-0 mt-2 bg-gray-800 rounded-xl shadow-xl border border-gray-700 max-h-60 overflow-y-auto z-50">
+          <li *ngFor="let name of animeNameList"
+              class="px-4 py-3 text-sm text-gray-300 hover:bg-gray-700/50 cursor-pointer transition-colors"
+              (click)="onSelectAnime(name)">
+            {{name}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-5xl" [class.opacity-50]="!createAnimeForm.enabled" [class.pointer-events-none]="!createAnimeForm.enabled">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-bold bg-gradient-to-r from-[#D5D1A1] to-[#D6D5C6] bg-clip-text text-transparent">
+        Edit Anime
+      </h2>
+      <p class="mt-2 text-gray-400" *ngIf="!createAnimeForm.enabled">Select an anime from search to begin editing</p>
+    </div>
+
+    <form [formGroup]="createAnimeForm" (ngSubmit)="updateAnime()" class="rounded-2xl bg-gray-800 p-8 shadow-xl border border-gray-700/50">
+      <div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8">
+        <div class="space-y-6">
+          <div class="relative group aspect-[2/3] rounded-xl border-2 border-dashed border-gray-600 bg-gray-700/50 overflow-hidden">
+            <img *ngIf="hasImage" [src]="imagePreviewUrl" class="w-full h-full object-cover transition-opacity group-hover:opacity-80">
+            <div *ngIf="!hasImage" class="absolute inset-0 flex items-center justify-center">
+              <i class="pi pi-image text-4xl text-gray-500"></i>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="input-label">Image URL</label>
+              <div class="relative">
+                <input type="text" formControlName="img" class="input-field" (input)="onUrlInput($event)">
+                <i class="pi pi-link absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+              </div>
+            </div>
+
+            <div>
+              <label class="input-label">Upload Image</label>
+              <label class="file-upload-button">
+                <input type="file" accept="image/*" (change)="onFileSelected($event)" class="hidden">
+                <i class="pi pi-upload mr-2"></i>
+                Choose File
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="grid gap-6 md:grid-cols-2">
+            <div>
+              <label class="input-label">Anime Title</label>
+              <div class="relative">
+                <input type="text" formControlName="name" class="input-field">
+                <i class="pi pi-tag absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+              </div>
+            </div>
+
+            <div class="relative">
+              <label class="input-label">Categories</label>
+              <div class="multi-select" (click)="toggleDropdown()">
+                <div class="selected-items">
+                  <span *ngIf="selectedCategories.length === 0" class="placeholder">Select categories...</span>
+                  <div *ngFor="let cat of selectedCategories" class="selected-tag">
+                    {{ cat }}
+                    <button type="button" (click)="removeCategory(cat)" class="remove-tag">
+                      <i class="pi pi-times-circle"></i>
+                    </button>
+                  </div>
+                </div>
+                <i class="pi pi-chevron-down absolute right-4 top-2/3 -translate-y-1/2 text-gray-400"></i>
+              </div>
+
+              <div *ngIf="categoryDropdownOpen" class="dropdown-menu transparent-scrollbar">
+                <div *ngFor="let cat of categories"
+                     class="dropdown-item"
+                     (click)="selectCategory(cat)">
+                  {{ cat }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid gap-6 md:grid-cols-2">
+            <div>
+              <label class="input-label">Episodes</label>
+              <div class="relative">
+                <input type="number" formControlName="episode" class="input-field">
+                <i class="pi pi-list absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+              </div>
+            </div>
+
+            <div>
+              <label class="input-label">Release Year</label>
+              <div class="relative">
+                <input type="number" formControlName="year" class="input-field">
+                <i class="pi pi-calendar absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="input-label">Description</label>
+            <textarea formControlName="description" rows="5" class="input-field transparent-scrollbar"></textarea>
+          </div>
+
+          <div>
+            <label class="input-label">Trailer URL</label>
+            <div class="relative">
+              <input type="text" formControlName="video" class="input-field">
+              <i class="pi pi-video absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-gray-700/50">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div class="status-message" [ngClass]="messageStyle">
+            <i class="pi mr-2" [class]="messageStyle"></i>
+            {{ message }}
+          </div>
+
+          <button type="submit"
+                  class="submit-button"
+                  [disabled]="createAnimeForm.invalid || isLoading === 'loading'"
+                  [ngClass]="{
+                    'success': isLoading === 'suc',
+                    'error': isLoading === 'err',
+                    'primary': isLoading === 'none'
+                  }">
+            <i class="pi" [class]="buttonIcon"></i>
+            {{ buttonText }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
