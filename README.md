@@ -5,7 +5,7 @@
   </h3>
 </p>
 
-##About the project
+## About the project
 A simple yet powerful anime tracker to organize your watchlist. View detailed anime info and manage your personal database with full support for adding, editing, and removing entries.
 
 ## 🚀 Functionalities
