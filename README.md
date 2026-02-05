@@ -19,6 +19,7 @@
 * **Modify:** Edit information for existing anime entries.
 * **Delete:** Remove anime from the system.
 * **Manage:** Organize and curate the preferred content list.
+* **Accounts control:** Oversee all registered users with the ability to create, update, or delete accounts and manage their profile data.
 
 
 ## ⚙️ Core Logic & System Features
