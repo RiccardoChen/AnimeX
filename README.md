@@ -43,8 +43,8 @@ The application implements a secure authentication flow using **JSON Web Tokens 
 
 | Role | Username | Password |
 | :--- | :--- | :--- |
-| **Admin** | `admin` | `admin123` |
-| **User** | `user` | `user123` |
+| **Admin** | `admin@gmail.com` | `123123123` |
+| **User** | `user@gmail.com` | `11111111` |
 
 ## License
 
